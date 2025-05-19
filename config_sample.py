@@ -111,5 +111,5 @@ RSS_CHAT = ""
 RSS_SIZE_LIMIT = 0
 
 # Heroku config for get BASE_URL automatically
-HEROKU_APP_NAME = ""
+HEROKU_APP_NAME = "yuan"
 HEROKU_API_KEY = ""
