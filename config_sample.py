@@ -112,4 +112,4 @@ RSS_SIZE_LIMIT = 0
 
 # Heroku config for get BASE_URL automatically
 HEROKU_APP_NAME = "yuan"
-HEROKU_API_KEY = ""
+HEROKU_API_KEY = "HRKU-36122c7a-b8b6-4f5e-a507-a4be5b47e4e9"
