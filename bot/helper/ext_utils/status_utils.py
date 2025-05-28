@@ -205,6 +205,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
         tasks[start_position : STATUS_LIMIT + start_position],
         start=1,
     ):
+        msg += "═════\n"  # Added header border
         if status != "All":
             tstatus = status
         elif iscoroutinefunction(task.status):
@@ -218,7 +219,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
         msg += f"<code>{escape(f'{task.name()}')}</code>"
         if task.listener.subname:
             msg += f"\n<i>{task.listener.subname}</i>"
-        msg += f"\n├✺ by: {source(task.listener)}"
+        msg += f"\n├ by: {source(task.listener)}"
         if (
             tstatus not in [MirrorStatus.STATUS_SEED, MirrorStatus.STATUS_QUEUEUP]
             and task.listener.progress
@@ -254,7 +255,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
         msg += f"\n├ <b>Tool:</b> {task.tool}"
         task_gid = task.gid()
         short_gid = task_gid[-8:] if task_gid.startswith("SABnzbd") else task_gid[:8]
-        msg += f"\n├ /stop_{short_gid}\n\n"
+        msg += f"\n└ /stop_{short_gid}\n\n"  # Changed to └ for stop command
 
     if len(msg) == 0:
         if status == "All":
@@ -275,6 +276,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
             if status_value != status:
                 buttons.data_button(label, f"status {sid} st {status_value}")
     button = buttons.build_menu(8)
-    msg += f"├ <b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-    msg += f"\n├ <b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - bot_start_time)}"
+    msg += f"─────\n"  # Added system stats divider
+    msg += f"└ <b>CPU:</b> {cpu_percent()}% | <b>FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
+    msg += f"\n└ <b>RAM:</b> {virtual_memory().percent}% | <b>UPTIME:</b> {get_readable_time(time() - bot_start_time)}"
     return msg, button
